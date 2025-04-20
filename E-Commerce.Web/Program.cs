@@ -8,7 +8,7 @@ namespace E_Commerce.Web
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -25,13 +25,15 @@ namespace E_Commerce.Web
             builder.Services.AddScoped<IDataSeeding, DataSeeding>();
 
             #endregion
-
+            
             var app = builder.Build();
 
-
+            #region DataSeeding
             using var Scoope = app.Services.CreateScope();
             var ObjectOfDataSeding=Scoope.ServiceProvider.GetRequiredService<IDataSeeding>();
-            ObjectOfDataSeding.DataSeed();
+            await ObjectOfDataSeding.DataSeedAsync();
+            #endregion
+
 
             #region Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
