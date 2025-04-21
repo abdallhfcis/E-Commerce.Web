@@ -48,6 +48,7 @@ namespace E_Commerce.Web
                 app.UseSwaggerUI();
             }
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
             app.MapControllers();
             #endregion
 
