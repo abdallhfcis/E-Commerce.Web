@@ -9,7 +9,9 @@ namespace Services.Specifications
 {
      class ProductsWithBrandsAndTypesSpecifications : BaseSpecifications<Product, int>
     {
-        public ProductsWithBrandsAndTypesSpecifications():base(null)
+        public ProductsWithBrandsAndTypesSpecifications(int? BrandId, int? TypeId) 
+            :base(P => (!BrandId.HasValue || P.BrandId == BrandId) && (!TypeId.HasValue || P.TypeId == TypeId))
+           
         {
             AddInclude(P => P.ProductBrand);
             AddInclude(P => P.ProductType);
