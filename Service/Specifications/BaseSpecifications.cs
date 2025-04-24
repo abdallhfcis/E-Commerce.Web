@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -19,7 +20,18 @@ namespace Services.Specifications
 
         public List<Expression<Func<TEntity, object>>> IncludeExpression { get; } = [];
 
-        public void AddInclude ( Expression<Func<TEntity, object>> includeExpression) => IncludeExpression.Add(includeExpression);
 
-}
+
+        public void AddInclude ( Expression<Func<TEntity, object>> includeExpression) => IncludeExpression.Add(includeExpression);
+        #region Sorting
+        public Expression<Func<TEntity, object>> OrderBy {get;private set;}
+
+        public Expression<Func<TEntity, object>> OrderByDecending { get;private set;}
+
+        public void AddOrderBy(Expression<Func<TEntity, object>> orderByExp) => OrderBy=orderByExp;
+        public void AddOrderByDesxending(Expression<Func<TEntity, object>> orderByDescExp) => OrderByDecending = orderByDescExp;
+
+
+        #endregion
+    }
 }
