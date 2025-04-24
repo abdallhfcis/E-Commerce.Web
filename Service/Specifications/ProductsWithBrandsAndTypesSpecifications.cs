@@ -35,8 +35,10 @@ namespace Services.Specifications
                     AddOrderByDesxending (P => P.Price);
                     break;
                 default:break;
-
             }
+
+            ApplyPagintion(queryParams.PageSize, queryParams.PageIndex);
+
         }
         public ProductsWithBrandsAndTypesSpecifications(int id) : base(P => P.Id == id)
         {

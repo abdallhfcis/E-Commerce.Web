@@ -19,19 +19,26 @@ namespace Presistence
             {
                 Query = Query.Where(specifications.Criteria);
             }
+
             if(specifications.OrderBy != null)
             {
                 Query=Query.OrderBy(specifications.OrderBy);
             }
+
             if(specifications.OrderByDecending != null)
             {
                 Query=Query.OrderByDescending(specifications.OrderByDecending);
             }
+
+
             if(specifications.IncludeExpression != null && specifications.IncludeExpression.Count >0)
             {
                 Query=specifications.IncludeExpression.Aggregate(Query,(CurrentQuery,IncludeExpression)=> CurrentQuery.Include(IncludeExpression));
             }
-
+            if(specifications.IsPaginated)
+            {
+                Query = Query.Skip(specifications.Sikp).Take(specifications.Take);
+            }
             return Query;
         }
     }
