@@ -11,5 +11,6 @@ namespace Shared
         public int? BrandId {  get; set; }
         public int? TypeId{ get; set; }
         public ProductSortingOption sortingOption { get; set; } 
+        public string? SearchValue { get; set; }
     }
 }

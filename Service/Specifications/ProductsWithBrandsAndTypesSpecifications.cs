@@ -11,7 +11,10 @@ namespace Services.Specifications
      class ProductsWithBrandsAndTypesSpecifications : BaseSpecifications<Product, int>
     {
         public ProductsWithBrandsAndTypesSpecifications(ProductQueryParams queryParams) 
-            :base(P => (!queryParams.BrandId.HasValue || P.BrandId == queryParams.BrandId) && (!queryParams.TypeId.HasValue || P.TypeId == queryParams.TypeId))
+            :base(P => (!queryParams.BrandId.HasValue || P.BrandId == queryParams.BrandId) 
+            && (!queryParams.TypeId.HasValue || P.TypeId == queryParams.TypeId)
+            && (string.IsNullOrWhiteSpace(queryParams.SearchValue) || P.Name.ToLower().Contains(queryParams.SearchValue.ToLower()))
+            )
            
         {
             AddInclude(P => P.ProductBrand);
