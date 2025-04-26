@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using DomainLayer.Contracts;
+using DomainLayer.Exceptions;
 using DomainLayer.Models;
 using ServiceAbstraction;
 using Services.Specifications;
@@ -44,6 +45,10 @@ namespace Services
         {
             var specifications = new ProductsWithBrandsAndTypesSpecifications(id);
             var Product= await _unitOfWork.GetRepository<Product,int>().GetByIdAsync(specifications);
+            if(Product == null)
+            {
+                throw new ProductNotFound(id);
+            }
             return _mapper.Map<Product,ProductDto>(Product);
         }
     }
