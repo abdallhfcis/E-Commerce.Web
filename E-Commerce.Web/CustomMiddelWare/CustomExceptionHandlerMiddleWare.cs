@@ -19,31 +19,51 @@ namespace E_Commerce.Web.CustomMiddelWare
             try
             {
                 await _next.Invoke(httpcontext);
+
+                await HandelNotEndPointAsync(httpcontext);
+
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Something Went Wrong");
 
-                //Set Status Code for ResponSe
-                httpcontext.Response.StatusCode = ex switch
+                await HandelExceptionAsync(httpcontext, ex);
+
+            }
+        }
+
+        private static async Task HandelExceptionAsync(HttpContext httpcontext, Exception ex)
+        {
+            //Set Status Code for Response
+            httpcontext.Response.StatusCode = ex switch
+            {
+                NotFoundException => StatusCodes.Status404NotFound,
+                _ => StatusCodes.Status500InternalServerError
+            };
+
+            //Set Content Type  for Response
+            httpcontext.Response.ContentType = "application/json";
+
+            //Response Object 
+            var response = new ErrorToReurn()
+            {
+                StatusCode = httpcontext.Response.StatusCode,
+                ErrorMessage = ex.Message
+            };
+            //Return Object as Json 
+            await httpcontext.Response.WriteAsJsonAsync(response);
+        }
+
+        private static async Task HandelNotEndPointAsync(HttpContext httpcontext)
+        {
+            if (httpcontext.Response.StatusCode == StatusCodes.Status404NotFound)
+            {
+                var Response = new ErrorToReurn()
                 {
-                    NotFoundException => StatusCodes.Status404NotFound,
-                    _ => StatusCodes.Status500InternalServerError
+                    StatusCode = StatusCodes.Status404NotFound,
+                    ErrorMessage = $"EndPoint {httpcontext.Request.Path} is Not Found"
                 };
-                    
-
-                //Set Content Type  for Response
-                httpcontext.Response.ContentType = "application/json";
-
-                //Response Object 
-                var response = new ErrorToReurn()
-                {
-                    StatusCode = httpcontext.Response.StatusCode,
-                    ErrorMessage = ex.Message
-                };
-                //Return Object as Json 
-                await httpcontext.Response.WriteAsJsonAsync(response);
-
+                await httpcontext.Response.WriteAsJsonAsync(Response);
             }
         }
     }
