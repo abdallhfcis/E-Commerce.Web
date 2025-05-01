@@ -18,7 +18,7 @@ namespace Presistence
             Services.AddScoped<IBasketRepository, BasketRepository>();
             Services.AddSingleton<IConnectionMultiplexer>((_) =>
             {
-                return  ConnectionMultiplexer.Connect(Configuration.GetConnectionString("RedisConnectionString"))
+                return ConnectionMultiplexer.Connect(Configuration.GetConnectionString("RedisConnectionString"));
             });
             return Services;
         }
