@@ -17,16 +17,13 @@ namespace Presistence.Repositories
 
         public async Task<CustomerBasket?> CreateOrUpdateBasketAsync(CustomerBasket basket, TimeSpan? TimeToLive = null)
         {
-            throw new NotImplementedException();
+            var JsonBasket = JsonSerializer.Serialize<CustomerBasket>(basket);
+            var IsCreatedOrUpdated = await _database.StringSetAsync(basket.Id, JsonBasket, TimeToLive ?? TimeSpan.FromDays(30));
 
-            //var JsonBasket=JsonSerializer.Serialize<CustomerBasket>(basket);
-            ////var IsCreatedOrUpdated = await _database.StringGetSetAsync(basket.Id, JsonBasket, TimeToLive ?? TimeSpan.FromHours(72));
-            //var IsCreatedOrUpdated = await _database.StringGetSetAsync(basket.Id, JsonBasket, TimeToLive ?? TimeSpan.FromDays(30));
-
-            //if (IsCreatedOrUpdated)
-            //    return await GetBasketAsync(basket.Id);
-            //else 
-            //    return null;
+            if (IsCreatedOrUpdated)
+                return await GetBasketAsync(basket.Id);
+            else
+                return null;
 
         }
 
