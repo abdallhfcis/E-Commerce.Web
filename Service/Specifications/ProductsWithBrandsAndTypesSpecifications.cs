@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DomainLayer.Models;
+using DomainLayer.Models.ProductModule;
 using Shared;
 
 namespace Services.Specifications
 {
-     class ProductsWithBrandsAndTypesSpecifications : BaseSpecifications<Product, int>
+    class ProductsWithBrandsAndTypesSpecifications : BaseSpecifications<Product, int>
     {
         public ProductsWithBrandsAndTypesSpecifications(ProductQueryParams queryParams) 
             :base(P => (!queryParams.BrandId.HasValue || P.BrandId == queryParams.BrandId) 
