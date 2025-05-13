@@ -66,6 +66,18 @@ namespace Presistence
                     }
                 }
 
+
+                if (!_storeDbContext.Set<DeliveryMethod>().Any())
+                {
+                    var DeliveryMethodsData = File.OpenRead(@"..\InfraStructure\Presistence\Data\DataSeed\delivery.json");
+                    //Conver to C# Objects[Productbrand]
+                    var DeliveryMethods = await JsonSerializer.DeserializeAsync<List<DeliveryMethod>>(DeliveryMethodsData);
+                    if (DeliveryMethods != null && DeliveryMethods.Any())
+                    {
+                        await _storeDbContext.Set<DeliveryMethod>().AddRangeAsync(DeliveryMethods);
+                    }
+                }
+
                 await _storeDbContext.SaveChangesAsync();
             }
             catch (Exception ex)

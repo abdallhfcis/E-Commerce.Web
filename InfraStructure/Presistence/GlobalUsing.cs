@@ -11,4 +11,5 @@ global using DomainLayer.Contracts;
 global using Presistence.Repositories;
 global using Presistence.Data;
 global using Microsoft.EntityFrameworkCore;
+global using DomainLayer.Models.OrderModule;
 
