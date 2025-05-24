@@ -19,5 +19,14 @@ namespace Presentation.Controllers
             var Order = await _serviceManager.OrderServicecs.CreateOrder(orderDto, GetEmailFromToken());
             return Ok(Order);
         }
+
+        //Get Delivery Methods
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<Deliver>>>
+        //Get All Order By Email
+
+        //Get Order By Id
+
+
     }
 }
