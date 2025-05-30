@@ -1,4 +1,5 @@
 
+using System.Text.Json;
 using DomainLayer.Contracts;
 using E_Commerce.Web.CustomMiddelWare;
 using E_Commerce.Web.Extensions;
@@ -12,6 +13,7 @@ using ServiceAbstraction;
 using Services;
 using Services.MappingProfilies;
 using Shared.ErrorModels;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace E_Commerce.Web
 {
@@ -46,7 +48,24 @@ namespace E_Commerce.Web
 
             if (app.Environment.IsDevelopment())
             {
-               app.UseSwaggerMiddelWare();
+                app.UseSwagger();
+                app.UseSwaggerUI(Option =>
+                {
+                    Option.ConfigObject = new ConfigObject()
+                    {
+                        DisplayRequestDuration =true
+                    };
+                    Option.DocumentTitle = "My E-Commerce API";
+
+                    Option.JsonSerializerOptions = new JsonSerializerOptions()
+                    {
+                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                    };
+
+                    Option.DocExpansion(DocExpansion.None);
+                    Option.EnableFilter();
+                    Option.EnablePersistAuthorization();
+                });
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -59,7 +78,7 @@ namespace E_Commerce.Web
             app.Run();
 
            
-            //Session 07 Start
+            //Session 04 Start
 
         }
     }

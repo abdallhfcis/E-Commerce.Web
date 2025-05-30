@@ -28,6 +28,7 @@ namespace Presistence
             {
                 options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection"));
             });
+            Services.AddScoped<ICacheRepository, CacheRepository>();
 
             Services.AddIdentityCore<ApplicationUser>()
                     .AddRoles<IdentityRole>()

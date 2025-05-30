@@ -12,7 +12,11 @@ using ServiceAbstraction;
 
 namespace Services
 {
-    public class ServiceManager(IUnitOfWork _unitOfWork,IMapper _mapper,IBasketRepository _basketRepository,UserManager<ApplicationUser> _userManager,IConfiguration _configuration) : IServiceManager
+    public class ServiceManager(IUnitOfWork _unitOfWork
+        ,IMapper _mapper
+        ,IBasketRepository _basketRepository
+        ,UserManager<ApplicationUser> _userManager
+        ,IConfiguration _configuration) 
     {
         private readonly Lazy<IProductService> _LazyProductService=new Lazy<IProductService>(() => new ProductService(_unitOfWork,_mapper));
         
