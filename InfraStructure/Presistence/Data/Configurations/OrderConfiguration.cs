@@ -16,13 +16,13 @@ namespace Presistence.Data.Configurations
             builder.Property(O => O.SubTotal).HasColumnType("decimal(8,2)");
 
             builder.HasMany(O => O.Items)
-                   .WithOne();
+                   .WithOne().OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(O => O.DeliveryMethod)
                    .WithMany()
                    .HasForeignKey(O => O.DeliveryMethodId);
 
-            builder.OwnsOne(O => O.Address);
+            builder.OwnsOne(O => O.shipToAddress);
         }
     }
 }

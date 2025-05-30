@@ -14,15 +14,15 @@ namespace DomainLayer.Models.OrderModule
         }
         public Order(string userEmail, OrderAddress address, DeliveryMethod deliveryMethod, ICollection<OrderItem> items, decimal subTotal)
         {
-            UserEmail = userEmail;
-            Address = address;
+            buyerEmail = userEmail;
+            shipToAddress = address;
             DeliveryMethod = deliveryMethod;
             Items = items;
             SubTotal = subTotal;
         }
 
-        public string UserEmail { get; set; } = default!;
-        public OrderAddress Address { get; set; } = default!;
+        public string buyerEmail { get; set; } = default!;
+        public OrderAddress shipToAddress { get; set; } = default!;
         public DeliveryMethod DeliveryMethod { get; set; } = default!;
         public ICollection<OrderItem> Items { get; set; } = [];
         public decimal SubTotal { get; set; }
